@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import '../../styles/header.css';
 import { HeaderProps } from '@/types';
-
 
 export default function Header({ integrantes }: HeaderProps) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -12,49 +12,36 @@ export default function Header({ integrantes }: HeaderProps) {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-
-    const normalizedSearchTerm = searchTerm.trim().toLowerCase();
-
-    const found = integrantes.find(integrante =>
-      integrante.nome.toLowerCase().includes(normalizedSearchTerm) 
+    const found = integrantes.find(integrante => 
+      integrante.nome.toLowerCase() === searchTerm.toLowerCase()
     );
 
     if (found) {
-      router.push(`/cards/${found.nome.toLowerCase()}`);
+      router.push(`/cards/${found.nome.toLowerCase()}`); 
     } else {
-      alert("Integrante não encontrado!");
+      alert("Integrante não encontrado");
     }
   };
 
   return (
-    <header>
-      <div className="container mx-auto">
-        <h1 className="text-2xl font-bold">
-          <Link href="/" >
-            Portfólio
-          </Link>
+    <header className="header">
+      <div className="header-container">
+        <h1 className="header-title">
+          <Link href="/">Portfólio</Link>
         </h1>
-        <nav>
-          <form onSubmit={handleSearch} className="flex">
+        <nav className="header-nav">
+          <form onSubmit={handleSearch} className="search-search">
             <input 
               type="text" 
               placeholder="Buscar integrante..."
+              className="header-input"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <button type="submit">
-              🔍
+            <button type="submit" className="btn-header">
+              Buscar
             </button>
           </form>
-          <ul className="mt-2 space-y-1">
-            {integrantes.map((integrante) => (
-              <li key={integrante.id}>
-                <Link href={`/cards/${integrante.nome.toLowerCase()}`}>
-                  {integrante.nome}
-                </Link>
-              </li>
-            ))}
-          </ul>
         </nav>
       </div>
     </header>
