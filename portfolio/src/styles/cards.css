@@ -1,0 +1,44 @@
+/* cards.css */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .main {
+    @apply min-h-screen bg-gray-100 p-10 flex flex-col items-center; /* Fundo cinza claro */
+  }
+
+  .title {
+    @apply text-5xl font-extrabold mb-12 text-center text-gray-800;
+  }
+
+  .cards-container {
+    @apply flex flex-col items-center mt-10;
+  }
+
+  .card-row {
+    @apply flex justify-center gap-10 mb-10;
+  }
+
+  .card {
+    @apply cursor-pointer bg-white rounded-lg shadow-lg p-8 transition-transform duration-300 ease-in-out transform; 
+    @apply border border-gray-300; /* Borda padrão */
+  }
+
+  .card:hover {
+    @apply scale-105 shadow-[0_10px_20px_rgba(0,0,128,0.5)]; /* Sombra azul escura ao passar o mouse */
+  }
+
+  .card h2 {
+    @apply text-xl font-semibold text-center text-gray-700 tracking-wide transition-colors duration-300; /* Transição suave para a cor do texto */
+  }
+
+  .card:hover h2 {
+    @apply text-blue-500; /* Muda a cor do texto do título ao passar o mouse */
+  }
+
+  .card img {
+    @apply w-32 h-32 rounded-full mb-4 object-cover border-4 border-gray-200 transition-transform duration-300 ease-in-out hover:scale-110;
+  }
+}

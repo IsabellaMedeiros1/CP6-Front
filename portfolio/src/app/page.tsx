@@ -1,36 +1,65 @@
 "use client";
+
 import { useRouter } from "next/navigation";
 import { integrantes } from "@/types";
 import Image from "next/image";
+import "@/styles/cards.css";
 
 export default function Home() {
   const router = useRouter();
 
   const handleCardClick = (nome: string) => {
-    router.push(`/cards/${nome.toLowerCase()}`); 
+    router.push(`/cards/${nome.toLowerCase()}`);
   };
 
   return (
-    <main className="min-h-screen bg-gray-100 p-10">
-      <h1 className="text-4xl font-bold text-center mb-10">Portfólio de Avaliações</h1>
+    <main className="main">
+      <h1 className="title">Portfólio de Avaliações</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {integrantes.map((integrante) => (
-          <div
-            key={integrante.id}
-            className="cursor-pointer bg-white rounded-lg shadow-lg p-6 hover:scale-105 transition-transform"
-            onClick={() => handleCardClick(integrante.nome)} 
-          >
-            <Image
-              src={`/img/${integrante.nome.toLowerCase()}.jpeg`}
-              alt={`Foto de ${integrante.nome}`}
-              width={150}
-              height={150}
-              className="w-32 h-32 mx-auto rounded-full mb-4 object-cover"
-            />
-            <h2 className="text-2xl font-semibold text-center">{integrante.nome}</h2>
-          </div>
-        ))}
+      <div className="cards-container">
+        {/* Linha de 3 cards */}
+        <div className="card-row">
+          {integrantes.slice(0, 3).map((integrante) => (
+            <div
+              key={integrante.id}
+              className="card"
+              onClick={() => handleCardClick(integrante.nome)}
+            >
+              <div className="flex justify-center mb-4"> {/* Centralizando a imagem */}
+                <Image
+                  src={`/img/${integrante.nome.toLowerCase()}.jpeg`}
+                  alt={`Foto de ${integrante.nome}`}
+                  width={120} // Ajustando a largura da imagem
+                  height={120} // Ajustando a altura da imagem
+                  className="rounded-full"
+                />
+              </div>
+              <h2>{integrante.nome}</h2>
+            </div>
+          ))}
+        </div>
+
+        {/* Linha de 2 cards */}
+        <div className="card-row">
+          {integrantes.slice(3, 5).map((integrante) => (
+            <div
+              key={integrante.id}
+              className="card"
+              onClick={() => handleCardClick(integrante.nome)}
+            >
+              <div className="flex justify-center mb-4"> {/* Centralizando a imagem */}
+                <Image
+                  src={`/img/${integrante.nome.toLowerCase()}.jpeg`}
+                  alt={`Foto de ${integrante.nome}`}
+                  width={120} // Ajustando a largura da imagem
+                  height={120} // Ajustando a altura da imagem
+                  className="rounded-full"
+                />
+              </div>
+              <h2>{integrante.nome}</h2>
+            </div>
+          ))}
+        </div>
       </div>
     </main>
   );
