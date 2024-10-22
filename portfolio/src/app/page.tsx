@@ -1,5 +1,4 @@
 "use client";
-
 import { useRouter } from "next/navigation";
 import { integrantes } from "@/types";
 import Image from "next/image";
@@ -8,7 +7,7 @@ export default function Home() {
   const router = useRouter();
 
   const handleCardClick = (nome: string) => {
-    router.push(`/integrantes/${nome.toLowerCase()}`);
+    router.push(`/cards/${nome.toLowerCase()}`); 
   };
 
   return (
@@ -20,7 +19,7 @@ export default function Home() {
           <div
             key={integrante.id}
             className="cursor-pointer bg-white rounded-lg shadow-lg p-6 hover:scale-105 transition-transform"
-            onClick={() => handleCardClick(integrante.nome)}
+            onClick={() => handleCardClick(integrante.nome)} 
           >
             <Image
               src={`/img/${integrante.nome.toLowerCase()}.jpeg`}
@@ -28,7 +27,6 @@ export default function Home() {
               width={150}
               height={150}
               className="w-32 h-32 mx-auto rounded-full mb-4 object-cover"
-              priority // Garantir carregamento rápido
             />
             <h2 className="text-2xl font-semibold text-center">{integrante.nome}</h2>
           </div>
