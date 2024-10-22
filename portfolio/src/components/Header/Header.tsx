@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import '../../styles/header.css';
 import { HeaderProps } from '@/types';
+import { MdOutlineSearch as Search} from "react-icons/md";
 
 export default function Header({ integrantes }: HeaderProps) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -39,7 +40,7 @@ export default function Header({ integrantes }: HeaderProps) {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
             <button type="submit" className="btn-header">
-              Buscar
+              <Search/>
             </button>
           </form>
         </nav>
