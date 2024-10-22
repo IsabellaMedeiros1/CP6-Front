@@ -1,4 +1,6 @@
+// app/layout.tsx
 import Header from "@/components/Header/Header";
+import { integrantes } from "@/types";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -12,9 +14,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="pt-br">
       <body>
-        <Header integrantes={[]}/>
+        <Header integrantes={integrantes} />
         {children}
       </body>
     </html>
