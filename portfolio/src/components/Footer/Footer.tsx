@@ -9,7 +9,7 @@ export default function Footer() {
         <p className="mb-2">Confira nosso código-fonte e contribuições no GitHub:</p>
       
         <div className="flex justify-center items-center mb-4">
-          <Link href="https://github.com/aaaaaaa.com" target="_blank">
+          <Link href="https://github.com/IsabellaMedeiros1/CP6-Front" target="_blank">
             <GitHub className="text-3xl hover:text-blue-400 transition duration-300" /> 
           </Link>
         </div>
