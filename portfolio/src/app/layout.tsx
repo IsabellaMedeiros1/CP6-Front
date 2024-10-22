@@ -1,4 +1,5 @@
 // app/layout.tsx
+import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
 import { integrantes } from "@/types";
 import type { Metadata } from "next";
@@ -18,6 +19,7 @@ export default function RootLayout({
       <body>
         <Header integrantes={integrantes} />
         {children}
+        <Footer/>
       </body>
     </html>
   );

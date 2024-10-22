@@ -25,12 +25,12 @@ export default function Home() {
               className="card"
               onClick={() => handleCardClick(integrante.nome)}
             >
-              <div className="flex justify-center mb-4"> {/* Centralizando a imagem */}
+              <div className="flex justify-center mb-4"> 
                 <Image
                   src={`/img/${integrante.nome.toLowerCase()}.jpeg`}
                   alt={`Foto de ${integrante.nome}`}
-                  width={120} // Ajustando a largura da imagem
-                  height={120} // Ajustando a altura da imagem
+                  width={120} 
+                  height={120} 
                   className="rounded-full"
                 />
               </div>
@@ -47,12 +47,12 @@ export default function Home() {
               className="card"
               onClick={() => handleCardClick(integrante.nome)}
             >
-              <div className="flex justify-center mb-4"> {/* Centralizando a imagem */}
+              <div className="flex justify-center mb-4"> 
                 <Image
                   src={`/img/${integrante.nome.toLowerCase()}.jpeg`}
                   alt={`Foto de ${integrante.nome}`}
-                  width={120} // Ajustando a largura da imagem
-                  height={120} // Ajustando a altura da imagem
+                  width={120} 
+                  height={120} 
                   className="rounded-full"
                 />
               </div>

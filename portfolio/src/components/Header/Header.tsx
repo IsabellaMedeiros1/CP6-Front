@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import '../../styles/header.css';
+import "@/styles/header.css";
 import { HeaderProps } from '@/types';
 import { MdOutlineSearch as Search} from "react-icons/md";
 

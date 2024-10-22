@@ -1,12 +1,10 @@
-/* cards.css */
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer components {
   .main {
-    @apply min-h-screen bg-gray-100 p-10 flex flex-col items-center; /* Fundo cinza claro */
+    @apply min-h-screen bg-gray-100 p-10 flex flex-col items-center; 
   }
 
   .title {
@@ -23,19 +21,19 @@
 
   .card {
     @apply cursor-pointer bg-white rounded-lg shadow-lg p-8 transition-transform duration-300 ease-in-out transform; 
-    @apply border border-gray-300; /* Borda padrão */
+    @apply border border-gray-300; 
   }
 
   .card:hover {
-    @apply scale-105 shadow-[0_10px_20px_rgba(0,0,128,0.5)]; /* Sombra azul escura ao passar o mouse */
+    @apply scale-105 shadow-[0_10px_20px_rgba(0,0,128,0.5)]; 
   }
 
   .card h2 {
-    @apply text-xl font-semibold text-center text-gray-700 tracking-wide transition-colors duration-300; /* Transição suave para a cor do texto */
+    @apply text-xl font-semibold text-center text-gray-700 tracking-wide transition-colors duration-300; 
   }
 
   .card:hover h2 {
-    @apply text-blue-500; /* Muda a cor do texto do título ao passar o mouse */
+    @apply text-blue-500;
   }
 
   .card img {
