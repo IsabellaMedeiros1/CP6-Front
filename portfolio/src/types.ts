@@ -27,12 +27,17 @@ export interface HeaderProps {
 }
 
 export interface Notas {
-  [key: string]: number[]; 
+  [key: string]: number[];
 }
 
 export type TipoNotas = {
-  Challenge: Notas;
-  Checkpoint: Notas;
-  Global: Notas;
+  Challenge: {
+    [subject: string]: number[];
+  };
+  Checkpoint: {
+    [subject: string]: number[];
+  };
+  Global: {
+    [subject: string]: number[];
+  };
 };
-

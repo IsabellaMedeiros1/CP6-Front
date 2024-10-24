@@ -1,59 +1,48 @@
 "use client";
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TipoNotas } from '@/types';
-import { FaGithub as GitHub } from 'react-icons/fa'; 
-import { FaInstagram  as Insta} from "react-icons/fa6";
+import { FaGithub as GitHub } from 'react-icons/fa';
+import { FaInstagram as Insta } from "react-icons/fa6";
 import { RxLinkedinLogo as Linkedin } from "react-icons/rx";
-import "@/styles/paginas.css"; 
-
-
-
-const mockNotas: TipoNotas = {
-  Challenge: {
-    "Python": [70, 85, 90, 75],
-    "Java": [70, 75, 80, 85],
-    "Banco de Dados": [65, 70, 75, 80],
-    "Front-End": [88, 92, 85, 90],
-    "Software": [78, 82, 85, 80],
-    "Chatbot": [80, 85, 78, 90],
-  },
-  Checkpoint: {
-    "Python": [70, 85, 90, 75, 10],
-    "Java": [70, 75, 80, 85],
-    "Banco de Dados": [65, 70, 75, 80],
-    "Front-End": [88, 92, 85, 90],
-    "Software": [78, 82, 85, 80],
-    "Chatbot": [80, 85, 78, 90],
-  },
-  Global: {
-    "Python": [70, 85, 90, 75],
-    "Java": [70, 75, 80, 85],
-    "Banco de Dados": [65, 70, 75, 80],
-    "Front-End": [88, 92, 85, 90],
-    "Software": [78, 82, 85, 80],
-    "Chatbot": [80, 85, 78, 90],
-  },
-};
+import "@/styles/paginas.css";
 
 export default function Isabella() {
   const [selectedSubject, setSelectedSubject] = useState<string>('');
   const [noteValue, setNoteValue] = useState<string>('');
-  const [notes, setNotes] = useState<TipoNotas>(mockNotas);
+  const [notes, setNotes] = useState<TipoNotas | null>(null);
   const [modalData, setModalData] = useState<{ type: string; subject: string; notes: string[] }>({ type: '', subject: '', notes: [] });
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [editType, setEditType] = useState<keyof TipoNotas>(''); 
+  const [editType, setEditType] = useState<keyof TipoNotas>('Challenge');
   const [editSubject, setEditSubject] = useState<string>('');
   const [noteToEdit, setNoteToEdit] = useState<string>('');
+  const [confirmationMessage, setConfirmationMessage] = useState<string>(''); // Estado para a mensagem de confirmação
+
+  // Função para buscar as notas da API
+  useEffect(() => {
+    const fetchNotes = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/api/base-notas');
+        const data = await response.json();
+        setNotes(data);
+      } catch (error) {
+        console.error('Erro ao buscar notas da API:', error);
+      }
+    };
+
+    fetchNotes();
+  }, []);
 
   const openModal = (type: keyof TipoNotas, subject: string) => {
-    const notesToDisplay = type === "Global" 
-      ? notes[type][subject].map((note: number, index: number) => `${index + 1}º semestre: ${note}`)
-      : notes[type][subject].map((note: number, index: number) => `${index + 1}ª sprint: ${note}`);
-    
-    setModalData({ type, subject, notes: notesToDisplay });
-    setShowModal(true);
+    if (notes) {
+      const notesToDisplay = type === "Global"
+        ? notes[type][subject].map((note: number, index: number) => `${index + 1}º semestre: ${note}`)
+        : notes[type][subject].map((note: number, index: number) => `${index + 1}ª sprint: ${note}`);
+
+      setModalData({ type, subject, notes: notesToDisplay });
+      setShowModal(true);
+    }
   };
 
   const closeModal = () => {
@@ -61,30 +50,69 @@ export default function Isabella() {
     setModalData({ type: '', subject: '', notes: [] });
   };
 
-  const handleAddNote = () => {
+  // Função para adicionar nota via API
+  const handleAddNote = async () => {
     if (selectedSubject && noteValue && editType) {
-      setNotes((prevNotes: TipoNotas) => ({
-        ...prevNotes,
-        [editType]: {
-          ...prevNotes[editType],
-          [selectedSubject]: [...(prevNotes[editType][selectedSubject] || []), Number(noteValue)],
-        },
-      }));
-      setNoteValue('');
+      try {
+        const response = await fetch('http://localhost:3000/api/base-notas', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            type: editType,
+            subject: selectedSubject,
+            note: Number(noteValue),
+          }),
+        });
+
+        if (response.ok) {
+          alert("")
+          const updatedNotes = await response.json();
+          setNotes(updatedNotes);
+          setNoteValue('');
+
+          // Exibe a mensagem de sucesso por 3 segundos
+          setConfirmationMessage('Nota adicionada com sucesso!');
+          setTimeout(() => setConfirmationMessage(''), 3000);
+        }
+      } catch (error) {
+        console.error('Erro ao adicionar nota:', error);
+      }
     }
   };
 
-  const handleEditNote = () => {
-    if (editSubject && noteToEdit && editType) {
-      const updatedNotes = notes[editType][editSubject].map((note: number) => (note === Number(noteToEdit) ? Number(noteValue) : note));
-      setNotes((prevNotes: TipoNotas) => ({
-        ...prevNotes,
-        [editType]: {
-          ...prevNotes[editType],
-          [editSubject]: updatedNotes,
-        },
-      }));
-      setNoteToEdit('');
+  // Função para editar nota via API
+  const handleEditNote = async () => {
+    if (editSubject && noteToEdit && noteValue && editType) {
+      try {
+        const response = await fetch('http://localhost:3000/api/base-notas', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            type: editType,
+            subject: editSubject,
+            oldNote: Number(noteToEdit),
+            newNote: Number(noteValue),
+          }),
+        });
+
+        if (response.ok) {
+          alert("")
+          const updatedNotes = await response.json();
+          setNotes(updatedNotes);
+          setNoteToEdit('');
+          setNoteValue('');
+
+          // Exibe a mensagem de sucesso por 3 segundos
+          setConfirmationMessage('Nota alterada com sucesso!');
+          setTimeout(() => setConfirmationMessage(''), 3000);
+        }
+      } catch (error) {
+        console.error('Erro ao editar nota:', error);
+      }
     }
   };
 
@@ -96,24 +124,30 @@ export default function Isabella() {
           alt="Foto"
           width={120}
           height={120}
-          className="rounded-full" 
-        />        
+          className="rounded-full"
+        />
         <div className="ml-6">
           <h1 className="titulo-nome">Isabella Medeiros</h1>
           <p className="descricao">Batatinha quando nasce alguma coisa que esqueci teste de descrição preguiça de pensar em algo cu pinto</p>
           <div className="mt-4 flex space-x-4">
-            <Link href="https://linkedin.com" ><Linkedin className="text-3xl hover:text-blue-400 transition duration-300"/></Link>
+            <Link href="https://linkedin.com"><Linkedin className="text-3xl hover:text-blue-400 transition duration-300" /></Link>
             <Link href="https://github.com"><GitHub className="text-3xl hover:text-blue-400 transition duration-300" /></Link>
-            <Link href="https://instagram.com"><Insta className="text-3xl hover:text-blue-400 transition duration-300"/></Link>
+            <Link href="https://instagram.com"><Insta className="text-3xl hover:text-blue-400 transition duration-300" /></Link>
           </div>
         </div>
       </div>
 
+      {confirmationMessage && (
+        <div className="bg-green-100 text-green-700 p-3 rounded mb-4">
+          {confirmationMessage}
+        </div>
+      )}
+
       <div className="grid-notas">
-        {Object.entries(mockNotas).map(([type]) => (
+        {notes && Object.entries(notes).map(([type]) => (
           <div key={type} className="card-notas">
             <h3 className="titulo-card">{type}</h3>
-            {Object.keys(mockNotas[type]).map((subject) => (
+            {Object.keys(notes[type as keyof TipoNotas]).map((subject) => (
               <div key={subject} className="mt-3">
                 <button
                   className="btn-nota"
@@ -147,18 +181,18 @@ export default function Isabella() {
         </div>
       )}
 
-      <div className="form-container ">
+      <div className="form-container">
         <h2 className="titulo-form">Adicionar Nota</h2>
         <select
           onChange={(e) => {
-            const selectedValue = e.target.value as keyof TipoNotas; 
+            const selectedValue = e.target.value as keyof TipoNotas;
             setEditType(selectedValue);
             setSelectedSubject('');
           }}
           className="select"
         >
           <option value="">Escolha a Avaliação</option>
-          {Object.keys(mockNotas).map((type) => (
+          {notes && Object.keys(notes).map((type) => (
             <option key={type} value={type}>
               {type}
             </option>
@@ -170,7 +204,7 @@ export default function Isabella() {
           className="select"
         >
           <option value="">Escolha a Matéria</option>
-          {editType && Object.keys(notes[editType]).map((subject) => (
+          {editType && notes && Object.keys(notes[editType]).map((subject) => (
             <option key={subject} value={subject}>
               {subject}
             </option>
@@ -192,14 +226,14 @@ export default function Isabella() {
         <h2 className="titulo-form">Alterar Nota</h2>
         <select
           onChange={(e) => {
-            const selectedValue = e.target.value as keyof TipoNotas; 
+            const selectedValue = e.target.value as keyof TipoNotas;
             setEditType(selectedValue);
             setEditSubject('');
           }}
           className="select"
         >
           <option value="">Escolha a Avaliação</option>
-          {Object.keys(mockNotas).map((type) => (
+          {notes && Object.keys(notes).map((type) => (
             <option key={type} value={type}>
               {type}
             </option>
@@ -211,19 +245,24 @@ export default function Isabella() {
           className="select"
         >
           <option value="">Escolha a Matéria</option>
-          {editType && Object.keys(notes[editType]).map((subject) => (
+          {editType && notes && Object.keys(notes[editType]).map((subject) => (
             <option key={subject} value={subject}>
               {subject}
             </option>
           ))}
         </select>
-        <input
-          type="number"
-          placeholder="Nota a ser alterada"
+        <select
           value={noteToEdit}
           onChange={(e) => setNoteToEdit(e.target.value)}
-          className="input-nota"
-        />
+          className="select"
+        >
+          <option value="">Escolha a Nota para Alterar</option>
+          {editSubject && notes && notes[editType][editSubject]?.map((note, index) => (
+            <option key={index} value={note}>
+              {note}
+            </option>
+          ))}
+        </select>
         <input
           type="number"
           placeholder="Nova Nota"
