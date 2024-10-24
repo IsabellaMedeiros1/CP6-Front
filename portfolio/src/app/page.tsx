@@ -17,7 +17,6 @@ export default function Home() {
       <h1 className="title">Portfólio de Avaliações</h1>
 
       <div className="cards-container">
-        {/* Linha de 3 cards */}
         <div className="card-row">
           {integrantes.slice(0, 3).map((integrante) => (
             <div
@@ -39,7 +38,6 @@ export default function Home() {
           ))}
         </div>
 
-        {/* Linha de 2 cards */}
         <div className="card-row">
           {integrantes.slice(3, 5).map((integrante) => (
             <div
