@@ -19,8 +19,8 @@ export default function RootLayout({
       <body>
         <Header integrantes={integrantes} />
         {children}
-        <Footer/>
       </body>
+      <Footer/>
     </html>
   );
 }

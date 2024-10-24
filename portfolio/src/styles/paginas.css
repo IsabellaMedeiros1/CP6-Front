@@ -1,0 +1,81 @@
+/* estilos gerais */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components{
+            
+    .titulo-nome {
+        @apply text-3xl font-bold text-gray-800;
+    }
+      
+    .descricao {
+        @apply text-gray-600 mt-2;
+    }
+      
+    .link {
+        @apply text-blue-600 hover:underline font-semibold;
+    }
+    
+    .grid-notas {
+        @apply mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6;
+    }
+    
+    .card-notas {
+        @apply border p-6 rounded-lg shadow-md bg-white transition-transform duration-300 ease-in-out transform hover:scale-105;
+    }
+    
+    .titulo-card {
+        @apply font-bold text-xl mb-4 text-gray-800;
+    }
+    
+    .btn-nota {
+        @apply bg-blue-600 text-white px-5 py-3 rounded w-full hover:bg-blue-700 transition duration-200 font-medium;
+    }
+    
+    .modal {
+        @apply fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center;
+    }
+    
+    .modal-content {
+        @apply bg-white p-8 rounded-lg shadow-lg max-w-sm w-full;
+    }
+    
+    .titulo-modal {
+        @apply text-2xl font-bold mb-4;
+    }
+    
+    .lista-notas {
+        @apply mb-4;
+    }
+    
+    .texto-nota {
+        @apply border-b py-2 text-gray-600;
+    }
+    
+    .btn-fechar {
+        @apply bg-red-500 text-white px-5 py-2 rounded hover:bg-red-600 transition duration-200;
+    }
+    
+    .form-container {
+        @apply mt-10 bg-white p-6 rounded-lg shadow-lg w-full max-w-md;
+    }
+    
+    .titulo-form {
+        @apply text-2xl font-semibold mb-4;
+    }
+    
+    .select {
+        @apply border p-3 mb-4 w-full rounded-lg;
+    }
+    
+    .input-nota {
+        @apply border p-3 mb-4 w-full rounded-lg;
+    }
+    
+    .btn-principal {
+        @apply bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition duration-200 font-semibold;
+    }
+    
+      
+}
