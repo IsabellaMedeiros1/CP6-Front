@@ -18,7 +18,7 @@ export default function Paula() {
   const [editType, setEditType] = useState<keyof TipoNotas>('Challenge');
   const [editSubject, setEditSubject] = useState<string>('');
   const [noteToEdit, setNoteToEdit] = useState<string>('');
-  const [confirmationMessage, setConfirmationMessage] = useState<string>(''); // Mensagem de confirmação
+  const [confirmationMessage, setConfirmationMessage] = useState<string>('');
 
   // Função para buscar as notas da API
   useEffect(() => {
@@ -240,13 +240,11 @@ export default function Paula() {
           onChange={(e) => setNoteValue(e.target.value)}
           className="input-nota"
         />
-        <button onClick={handleAddNote} className="btn-add-nota bg-[#007BFF] text-white hover:bg-[#0056b3] transition duration-200 px-4 py-2 rounded-full shadow-md">
+        <button onClick={handleAddNote} className="btn-add-nota bg-[#d82f53] text-white hover:bg-[#e26882] transition duration-200 px-4 py-2 rounded-full shadow-md">
           Adicionar
         </button>
       </div>
 
-
-      {/* Formulário para editar nota */}
       {/* Formulário para editar nota */}
       <div className="form-container">
         <h2 className="titulo-form">Editar Nota</h2>
@@ -256,7 +254,7 @@ export default function Paula() {
             setEditType(selectedValue);
             setEditSubject('');
           }}
-          className="select mb-4" // Margem inferior adicionada
+          className="select mb-4"
         >
           <option value="">Escolha a Avaliação</option>
           {notes && ['Challenge', 'Global', 'Checkpoint'].map((type) => (
@@ -268,7 +266,7 @@ export default function Paula() {
         <select
           value={editSubject}
           onChange={(e) => setEditSubject(e.target.value)}
-          className="select mb-4" // Margem inferior adicionada
+          className="select mb-4"
         >
           <option value="">Escolha a Matéria</option>
           {editType && notes && Object.keys(notes[editType]).map((subject) => (
@@ -280,7 +278,7 @@ export default function Paula() {
         <select
           value={noteToEdit}
           onChange={(e) => setNoteToEdit(e.target.value)}
-          className="select mb-4" // Margem inferior adicionada
+          className="select mb-4"
         >
           <option value="">Escolha a Nota para Editar</option>
           {editSubject && notes && notes[editType][editSubject].map((note: number, index: number) => (
@@ -294,11 +292,11 @@ export default function Paula() {
           placeholder="Novo Valor"
           value={noteValue}
           onChange={(e) => setNoteValue(e.target.value)}
-          className="input mb-4" // Margem inferior adicionada
+          className="input mb-4"
         />
         <button
           onClick={handleEditNote}
-          className="btn-add-nota bg-[#007BFF] text-white hover:bg-[#0056b3] transition duration-200 px-4 py-2 rounded-full shadow-md"
+          className="btn-add-nota bg-[#d82f53] text-white hover:bg-[#e26882 transition duration-200 px-4 py-2 rounded-full shadow-md"
         >
           Editar
         </button>
