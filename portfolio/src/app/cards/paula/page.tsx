@@ -117,7 +117,6 @@ export default function Paula() {
           setNotes(updatedNotes);
           setNoteToEdit('');
           setNoteValue('');
-          // Exibe a mensagem de sucesso por 3 segundos
           setConfirmationMessage('Nota alterada com sucesso!');
           setTimeout(() => setConfirmationMessage(''), 3000);
         } else {
@@ -236,7 +235,6 @@ export default function Paula() {
         </button>
       </div>
 
-      {/* Formulário para editar nota */}
       <div className="form-container">
         <h2 className="titulo-form">Editar Nota</h2>
         <select
