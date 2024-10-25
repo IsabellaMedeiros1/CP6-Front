@@ -1,6 +1,7 @@
-export interface Nota {
-  materia: string;
-  nota: string;
+
+interface Nota {
+  disciplina: string; // Nome da disciplina
+  valor: number;      // Valor da nota a ser adicionada
 }
 
 export interface Avaliacao {
@@ -11,12 +12,10 @@ export interface Avaliacao {
 
 export interface Integrante {
   id: number;
-  name: string;
   Challenge: Record<string, number[]>;
   Checkpoint: Record<string, number[]>;
   Global: Record<string, number[]>;
 }
-
 export const integrantes = [
   { id: 1, nome: "Isabella" },
   { id: 2, nome: "Cristian" },
@@ -30,12 +29,14 @@ export interface HeaderProps {
 }
 
 export interface Notas {
-  [key: string]: number[];
+  [type: string]: {
+    [subject: string]: number[] | undefined; // Adiciona undefined para evitar erros
+  };
 }
 
-export type TipoNotas = {
-  id: number;
-  name: string;
+
+
+export interface TipoNotas {
   Challenge: {
     [subject: string]: number[];
   };
@@ -45,4 +46,10 @@ export type TipoNotas = {
   Global: {
     [subject: string]: number[];
   };
-};
+}
+
+export interface AddNotaRequest {
+  tipo: keyof Integrante; // Challenge | Checkpoint | Global
+  disciplina: string;     // Nome da disciplina
+  valor: number;          // Valor da nota
+}

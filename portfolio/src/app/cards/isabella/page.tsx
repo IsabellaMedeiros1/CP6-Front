@@ -1,4 +1,5 @@
 "use client";
+
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
@@ -17,13 +18,13 @@ export default function Isabella() {
   const [editType, setEditType] = useState<keyof TipoNotas>('Challenge');
   const [editSubject, setEditSubject] = useState<string>('');
   const [noteToEdit, setNoteToEdit] = useState<string>('');
-  const [confirmationMessage, setConfirmationMessage] = useState<string>(''); // Estado para a mensagem de confirmação
+  const [confirmationMessage, setConfirmationMessage] = useState<string>(''); // Mensagem de confirmação
 
   // Função para buscar as notas da API
   useEffect(() => {
     const fetchNotes = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/base-notas');
+        const response = await fetch('http://localhost:3000/api/base-notas/1');
         const data = await response.json();
         setNotes(data);
       } catch (error) {
@@ -53,28 +54,36 @@ export default function Isabella() {
   // Função para adicionar nota via API
   const handleAddNote = async () => {
     if (selectedSubject && noteValue && editType) {
+      const newNote = Number(noteValue);
+
+      if (isNaN(newNote)) {
+        console.error('O valor da nota é inválido.');
+        return;
+      }
+
       try {
-        const response = await fetch('http://localhost:3000/api/base-notas', {
+        const response = await fetch('http://localhost:3000/api/base-notas/1', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            type: editType,
-            subject: selectedSubject,
-            note: Number(noteValue),
+            tipo: editType,        // Ajustado para "tipo"
+            disciplina: selectedSubject, // Ajustado para "disciplina"
+            valor: newNote,        // Ajustado para "valor"
           }),
         });
 
         if (response.ok) {
-          alert("")
           const updatedNotes = await response.json();
           setNotes(updatedNotes);
           setNoteValue('');
-
           // Exibe a mensagem de sucesso por 3 segundos
           setConfirmationMessage('Nota adicionada com sucesso!');
           setTimeout(() => setConfirmationMessage(''), 3000);
+        } else {
+          const errorData = await response.json();
+          console.error('Erro ao adicionar nota:', errorData);
         }
       } catch (error) {
         console.error('Erro ao adicionar nota:', error);
@@ -85,30 +94,39 @@ export default function Isabella() {
   // Função para editar nota via API
   const handleEditNote = async () => {
     if (editSubject && noteToEdit && noteValue && editType) {
+      const oldNote = Number(noteToEdit);
+      const newNote = Number(noteValue);
+
+      if (isNaN(oldNote) || isNaN(newNote)) {
+        console.error('Valores das notas são inválidos.');
+        return;
+      }
+
       try {
-        const response = await fetch('http://localhost:3000/api/base-notas', {
+        const response = await fetch('http://localhost:3000/api/base-notas/1', {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            type: editType,
-            subject: editSubject,
-            oldNote: Number(noteToEdit),
-            newNote: Number(noteValue),
+            tipo: editType,        // Ajustado para "tipo"
+            disciplina: editSubject, // Ajustado para "disciplina"
+            valorAntigo: oldNote,  // Ajustado para "valorAntigo"
+            novoValor: newNote,     // Ajustado para "novoValor"
           }),
         });
 
         if (response.ok) {
-          alert("")
           const updatedNotes = await response.json();
           setNotes(updatedNotes);
           setNoteToEdit('');
           setNoteValue('');
-
           // Exibe a mensagem de sucesso por 3 segundos
           setConfirmationMessage('Nota alterada com sucesso!');
           setTimeout(() => setConfirmationMessage(''), 3000);
+        } else {
+          const errorData = await response.json();
+          console.error('Erro ao editar nota:', errorData);
         }
       } catch (error) {
         console.error('Erro ao editar nota:', error);
@@ -118,10 +136,11 @@ export default function Isabella() {
 
   return (
     <div className="min-h-screen bg-gray-100 p-10 flex flex-col items-center">
+      {/* Seção de perfil */}
       <div className="flex items-center mb-10">
         <Image
           src="/img/isabella.jpeg"
-          alt="Foto"
+          alt="Foto de Isabella"
           width={120}
           height={120}
           className="rounded-full"
@@ -137,14 +156,16 @@ export default function Isabella() {
         </div>
       </div>
 
+      {/* Mensagem de confirmação */}
       {confirmationMessage && (
         <div className="bg-green-100 text-green-700 p-3 rounded mb-4">
           {confirmationMessage}
         </div>
       )}
 
+      {/* Seção de notas */}
       <div className="grid-notas">
-        {notes && Object.entries(notes).map(([type]) => (
+        {notes && ['Challenge', 'Global', 'Checkpoint'].map((type) => (
           <div key={type} className="card-notas">
             <h3 className="titulo-card">{type}</h3>
             {Object.keys(notes[type as keyof TipoNotas]).map((subject) => (
@@ -161,6 +182,7 @@ export default function Isabella() {
         ))}
       </div>
 
+      {/* Modal de notas */}
       {showModal && (
         <div className="modal">
           <div className="modal-content">
@@ -181,6 +203,7 @@ export default function Isabella() {
         </div>
       )}
 
+      {/* Formulário para adicionar nota */}
       <div className="form-container">
         <h2 className="titulo-form">Adicionar Nota</h2>
         <select
@@ -192,7 +215,7 @@ export default function Isabella() {
           className="select"
         >
           <option value="">Escolha a Avaliação</option>
-          {notes && Object.keys(notes).map((type) => (
+          {notes && ['Challenge', 'Global', 'Checkpoint'].map((type) => (
             <option key={type} value={type}>
               {type}
             </option>
@@ -217,23 +240,26 @@ export default function Isabella() {
           onChange={(e) => setNoteValue(e.target.value)}
           className="input-nota"
         />
-        <button onClick={handleAddNote} className="btn-principal">
+        <button onClick={handleAddNote} className="btn-add-nota bg-[#007BFF] text-white hover:bg-[#0056b3] transition duration-200 px-4 py-2 rounded-full shadow-md">
           Adicionar
         </button>
       </div>
 
+
+      {/* Formulário para editar nota */}
+      {/* Formulário para editar nota */}
       <div className="form-container">
-        <h2 className="titulo-form">Alterar Nota</h2>
+        <h2 className="titulo-form">Editar Nota</h2>
         <select
           onChange={(e) => {
             const selectedValue = e.target.value as keyof TipoNotas;
             setEditType(selectedValue);
             setEditSubject('');
           }}
-          className="select"
+          className="select mb-4" // Margem inferior adicionada
         >
           <option value="">Escolha a Avaliação</option>
-          {notes && Object.keys(notes).map((type) => (
+          {notes && ['Challenge', 'Global', 'Checkpoint'].map((type) => (
             <option key={type} value={type}>
               {type}
             </option>
@@ -242,7 +268,7 @@ export default function Isabella() {
         <select
           value={editSubject}
           onChange={(e) => setEditSubject(e.target.value)}
-          className="select"
+          className="select mb-4" // Margem inferior adicionada
         >
           <option value="">Escolha a Matéria</option>
           {editType && notes && Object.keys(notes[editType]).map((subject) => (
@@ -254,10 +280,10 @@ export default function Isabella() {
         <select
           value={noteToEdit}
           onChange={(e) => setNoteToEdit(e.target.value)}
-          className="select"
+          className="select mb-4" // Margem inferior adicionada
         >
-          <option value="">Escolha a Nota para Alterar</option>
-          {editSubject && notes && notes[editType][editSubject]?.map((note, index) => (
+          <option value="">Escolha a Nota para Editar</option>
+          {editSubject && notes && notes[editType][editSubject].map((note: number, index: number) => (
             <option key={index} value={note}>
               {note}
             </option>
@@ -265,15 +291,19 @@ export default function Isabella() {
         </select>
         <input
           type="number"
-          placeholder="Nova Nota"
+          placeholder="Novo Valor"
           value={noteValue}
           onChange={(e) => setNoteValue(e.target.value)}
-          className="input-nota"
+          className="input mb-4" // Margem inferior adicionada
         />
-        <button onClick={handleEditNote} className="btn-principal">
-          Alterar
+        <button
+          onClick={handleEditNote}
+          className="btn-add-nota bg-[#007BFF] text-white hover:bg-[#0056b3] transition duration-200 px-4 py-2 rounded-full shadow-md"
+        >
+          Editar
         </button>
       </div>
+
     </div>
   );
 }

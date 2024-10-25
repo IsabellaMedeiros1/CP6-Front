@@ -1,20 +1,19 @@
 [
   {
     "id": 1,
-    "name": "Isabella",
     "Challenge": {
       "Python": [
-        70,
-        85,
+        88,
+        50,
         90,
         75,
         88,
-        99,
-        99
+        95,
+        53
       ],
       "Java": [
         70,
-        75,
+        50,
         80,
         85,
         66
@@ -29,7 +28,8 @@
         88,
         92,
         85,
-        90
+        90,
+        100
       ],
       "Software": [
         78,
@@ -121,11 +121,14 @@
         78,
         90
       ]
-    }
+    },
+    "type": "Challenge",
+    "subject": "Python",
+    "oldNote": 88,
+    "newNote": 70
   },
   {
     "id": 2,
-    "name": "Cristian",
     "Challenge": {
       "Python": [
         75,
@@ -249,7 +252,6 @@
   },
   {
     "id": 3,
-    "name": "Paula",
     "Challenge": {
       "Python": [
         68,
@@ -373,7 +375,6 @@
   },
   {
     "id": 4,
-    "name": "Guilherme",
     "Challenge": {
       "Python": [
         72,
@@ -497,7 +498,6 @@
   },
   {
     "id": 5,
-    "name": "Igor",
     "Challenge": {
       "Python": [
         73,
@@ -618,5 +618,10 @@
         91
       ]
     }
+  },
+  {
+    "type": "Challenge",
+    "subject": "Python",
+    "note": 44
   }
 ]
