@@ -41,18 +41,18 @@
   }
 
   .btn-add-nota {
-    background-color: #007BFF; /* Azul médio */
-    color: white; /* Texto branco */
-    border: none;
-    padding: 0.5rem 1rem; /* Espaçamento */
-    border-radius: 9999px; /* Totalmente arredondado */
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
-  }
-  
-  .btn-add-nota:hover {
-    background-color: #0056b3; /* Azul mais escuro no hover */
-  }
-  
+  background-color: #007BFF; /* Azul médio */
+  color: white; /* Texto branco */
+  border: none;
+  padding: 0.5rem 1rem; /* Espaçamento */
+  border-radius: 9999px; /* Totalmente arredondado */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+.btn-add-nota:hover {
+  background-color: #0056b3; /* Azul mais escuro no hover */
+}
+
 }

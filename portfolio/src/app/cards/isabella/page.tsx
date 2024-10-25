@@ -137,7 +137,7 @@ export default function Isabella() {
   return (
     <div className="min-h-screen bg-gray-100 p-10 flex flex-col items-center">
       {/* Seção de perfil */}
-      <div className="flex items-center mb-10">
+      <div className="form-container mb-10 bg-blue-300 border border-gray-400 rounded-lg p-6 border-collapse">
         <Image
           src="/img/isabella.jpeg"
           alt="Foto de Isabella"
