@@ -18,9 +18,8 @@ export default function Isabella() {
   const [editType, setEditType] = useState<keyof TipoNotas>('Challenge');
   const [editSubject, setEditSubject] = useState<string>('');
   const [noteToEdit, setNoteToEdit] = useState<string>('');
-  const [confirmationMessage, setConfirmationMessage] = useState<string>(''); // Mensagem de confirmação
+  const [confirmationMessage, setConfirmationMessage] = useState<string>(''); 
 
-  // Função para buscar as notas da API
   useEffect(() => {
     const fetchNotes = async () => {
       try {
@@ -51,7 +50,6 @@ export default function Isabella() {
     setModalData({ type: '', subject: '', notes: [] });
   };
 
-  // Função para adicionar nota via API
   const handleAddNote = async () => {
     if (selectedSubject && noteValue && editType) {
       const newNote = Number(noteValue);
@@ -68,9 +66,9 @@ export default function Isabella() {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            tipo: editType,        // Ajustado para "tipo"
-            disciplina: selectedSubject, // Ajustado para "disciplina"
-            valor: newNote,        // Ajustado para "valor"
+            tipo: editType,       
+            disciplina: selectedSubject,
+            valor: newNote,       
           }),
         });
 
@@ -78,7 +76,6 @@ export default function Isabella() {
           const updatedNotes = await response.json();
           setNotes(updatedNotes);
           setNoteValue('');
-          // Exibe a mensagem de sucesso por 3 segundos
           setConfirmationMessage('Nota adicionada com sucesso!');
           setTimeout(() => setConfirmationMessage(''), 3000);
         } else {
@@ -91,7 +88,6 @@ export default function Isabella() {
     }
   };
 
-  // Função para editar nota via API
   const handleEditNote = async () => {
     if (editSubject && noteToEdit && noteValue && editType) {
       const oldNote = Number(noteToEdit);
@@ -109,10 +105,10 @@ export default function Isabella() {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            tipo: editType,        // Ajustado para "tipo"
-            disciplina: editSubject, // Ajustado para "disciplina"
-            valorAntigo: oldNote,  // Ajustado para "valorAntigo"
-            novoValor: newNote,     // Ajustado para "novoValor"
+            tipo: editType,        
+            disciplina: editSubject, 
+            valorAntigo: oldNote,  
+            novoValor: newNote,    
           }),
         });
 
@@ -121,7 +117,6 @@ export default function Isabella() {
           setNotes(updatedNotes);
           setNoteToEdit('');
           setNoteValue('');
-          // Exibe a mensagem de sucesso por 3 segundos
           setConfirmationMessage('Nota alterada com sucesso!');
           setTimeout(() => setConfirmationMessage(''), 3000);
         } else {
@@ -136,7 +131,6 @@ export default function Isabella() {
 
   return (
     <div className="min-h-screen bg-gray-100 p-10 flex flex-col items-center">
-      {/* Seção de perfil */}
       <div className="form-container mb-10 bg-blue-300 border border-gray-400 rounded-lg p-6 border-collapse">
         <Image
           src="/img/isabella.jpeg"
@@ -156,14 +150,12 @@ export default function Isabella() {
         </div>
       </div>
 
-      {/* Mensagem de confirmação */}
       {confirmationMessage && (
         <div className="bg-green-100 text-green-700 p-3 rounded mb-4">
           {confirmationMessage}
         </div>
       )}
 
-      {/* Seção de notas */}
       <div className="grid-notas">
         {notes && ['Challenge', 'Global', 'Checkpoint'].map((type) => (
           <div key={type} className="card-notas">
@@ -182,7 +174,6 @@ export default function Isabella() {
         ))}
       </div>
 
-      {/* Modal de notas */}
       {showModal && (
         <div className="modal">
           <div className="modal-content">
@@ -203,7 +194,6 @@ export default function Isabella() {
         </div>
       )}
 
-      {/* Formulário para adicionar nota */}
       <div className="form-container">
         <h2 className="titulo-form">Adicionar Nota</h2>
         <select
@@ -244,10 +234,6 @@ export default function Isabella() {
           Adicionar
         </button>
       </div>
-
-
-      {/* Formulário para editar nota */}
-      {/* Formulário para editar nota */}
       <div className="form-container">
         <h2 className="titulo-form">Editar Nota</h2>
         <select
@@ -256,7 +242,7 @@ export default function Isabella() {
             setEditType(selectedValue);
             setEditSubject('');
           }}
-          className="select mb-4" // Margem inferior adicionada
+          className="select mb-4" 
         >
           <option value="">Escolha a Avaliação</option>
           {notes && ['Challenge', 'Global', 'Checkpoint'].map((type) => (
@@ -268,7 +254,7 @@ export default function Isabella() {
         <select
           value={editSubject}
           onChange={(e) => setEditSubject(e.target.value)}
-          className="select mb-4" // Margem inferior adicionada
+          className="select mb-4" 
         >
           <option value="">Escolha a Matéria</option>
           {editType && notes && Object.keys(notes[editType]).map((subject) => (
@@ -280,7 +266,7 @@ export default function Isabella() {
         <select
           value={noteToEdit}
           onChange={(e) => setNoteToEdit(e.target.value)}
-          className="select mb-4" // Margem inferior adicionada
+          className="select mb-4" 
         >
           <option value="">Escolha a Nota para Editar</option>
           {editSubject && notes && notes[editType][editSubject].map((note: number, index: number) => (
@@ -294,7 +280,7 @@ export default function Isabella() {
           placeholder="Novo Valor"
           value={noteValue}
           onChange={(e) => setNoteValue(e.target.value)}
-          className="input mb-4" // Margem inferior adicionada
+          className="input mb-4" 
         />
         <button
           onClick={handleEditNote}

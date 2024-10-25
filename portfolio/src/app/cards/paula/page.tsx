@@ -20,7 +20,6 @@ export default function Paula() {
   const [noteToEdit, setNoteToEdit] = useState<string>('');
   const [confirmationMessage, setConfirmationMessage] = useState<string>('');
 
-  // Função para buscar as notas da API
   useEffect(() => {
     const fetchNotes = async () => {
       try {
@@ -51,7 +50,6 @@ export default function Paula() {
     setModalData({ type: '', subject: '', notes: [] });
   };
 
-  // Função para adicionar nota via API
   const handleAddNote = async () => {
     if (selectedSubject && noteValue && editType) {
       const newNote = Number(noteValue);
@@ -78,7 +76,6 @@ export default function Paula() {
           const updatedNotes = await response.json();
           setNotes(updatedNotes);
           setNoteValue('');
-          // Exibe a mensagem de sucesso por 3 segundos
           setConfirmationMessage('Nota adicionada com sucesso!');
           setTimeout(() => setConfirmationMessage(''), 3000);
         } else {
@@ -91,7 +88,6 @@ export default function Paula() {
     }
   };
 
-  // Função para editar nota via API
   const handleEditNote = async () => {
     if (editSubject && noteToEdit && noteValue && editType) {
       const oldNote = Number(noteToEdit);
@@ -136,7 +132,6 @@ export default function Paula() {
 
   return (
     <div className="min-h-screen bg-gray-100 p-10 flex flex-col items-center">
-      {/* Seção de perfil */}
       <div className="form-container mb-10 bg-rose-300 border border-gray-500 rounded-lg p-6 flex items-center justify-center">
         <Image
           src="/img/paula2.jpeg"
@@ -156,14 +151,12 @@ export default function Paula() {
         </div>
       </div>
 
-      {/* Mensagem de confirmação */}
       {confirmationMessage && (
         <div className="bg-green-100 text-green-700 p-3 rounded mb-4">
           {confirmationMessage}
         </div>
       )}
 
-      {/* Seção de notas */}
       <div className="grid-notas">
         {notes && ['Challenge', 'Global', 'Checkpoint'].map((type) => (
           <div key={type} className="card-notas">
@@ -182,7 +175,6 @@ export default function Paula() {
         ))}
       </div>
 
-      {/* Modal de notas */}
       {showModal && (
         <div className="modal">
           <div className="modal-content">
@@ -203,7 +195,6 @@ export default function Paula() {
         </div>
       )}
 
-      {/* Formulário para adicionar nota */}
       <div className="form-container">
         <h2 className="titulo-form">Adicionar Nota</h2>
         <select
