@@ -16,25 +16,30 @@ export interface Integrante {
   Checkpoint: Record<string, number[]>;
   Global: Record<string, number[]>;
 }
-export const integrantes = [
-  { id: 1, nome: "Isabella" },
-  { id: 2, nome: "Cristian" },
-  { id: 3, nome: "Paula" },
-  { id: 4, nome: "Igor" },
-  { id: 5, nome: "Guilherme" },
+export interface Integrante {
+  id: number;
+  nome: string; // Adicionado aqui
+  Challenge: Record<string, number[]>;
+  Checkpoint: Record<string, number[]>;
+  Global: Record<string, number[]>;
+}
+
+export const integrantes: Integrante[] = [
+  { id: 1, nome: "Isabella", Challenge: {}, Checkpoint: {}, Global: {} },
+  { id: 2, nome: "Cristian", Challenge: {}, Checkpoint: {}, Global: {} },
+  { id: 3, nome: "Paula", Challenge: {}, Checkpoint: {}, Global: {} },
+  { id: 4, nome: "Igor", Challenge: {}, Checkpoint: {}, Global: {} },
+  { id: 5, nome: "Guilherme", Challenge: {}, Checkpoint: {}, Global: {} },
 ];
 
 export interface HeaderProps {
-  integrantes: Integrante[];
+  integrantes: { id: number; nome: string }[]; // Modifique para corresponder à estrutura atual
 }
-
 export interface Notas {
   [type: string]: {
     [subject: string]: number[] | undefined; // Adiciona undefined para evitar erros
   };
 }
-
-
 
 export interface TipoNotas {
   Challenge: {
