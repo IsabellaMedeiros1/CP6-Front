@@ -11,7 +11,10 @@ export interface Avaliacao {
 
 export interface Integrante {
   id: number;
-  nome: string;
+  name: string;
+  Challenge: Record<string, number[]>;
+  Checkpoint: Record<string, number[]>;
+  Global: Record<string, number[]>;
 }
 
 export const integrantes = [
@@ -31,6 +34,8 @@ export interface Notas {
 }
 
 export type TipoNotas = {
+  id: number;
+  name: string;
   Challenge: {
     [subject: string]: number[];
   };
