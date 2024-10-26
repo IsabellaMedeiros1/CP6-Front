@@ -2,7 +2,7 @@
   {
     "id": 1,
     "Challenge": {
-      "Computational Thinkfing Using Python": [
+      "Computational Thinking Using Python": [
         93,
         100,
         100,
@@ -36,7 +36,7 @@
       ]
     },
     "Checkpoint": {
-      "Computational Thinkfing Using Python": [
+      "Computational Thinking Using Python": [
         98,
         89,
         0,
@@ -79,7 +79,7 @@
       ]
     },
     "Global": {
-      "Computational Thinkfing Using Python": [
+      "Computational Thinking Using Python": [
         80
       ],
       "Domain Driven Design Using Java": [
@@ -102,7 +102,7 @@
   {
     "id": 2,
     "Challenge": {
-      "Computational Thinkfing Using Python": [
+      "Computational Thinking Using Python": [
         81,
         95,
         60,
@@ -135,7 +135,7 @@
       ]
     },
     "Checkpoint": {
-      "Computational Thinkfing Using Python": [
+      "Computational Thinking Using Python": [
         45,
         50,
         60
@@ -167,7 +167,7 @@
       ]
     },
     "Global": {
-      "Computational Thinkfing Using Python": [
+      "Computational Thinking Using Python": [
         80
       ],
       "Domain Driven Design Using Java": [
@@ -190,7 +190,7 @@
   {
     "id": 3,
     "Challenge": {
-      "Computational Thinkfing Using Python": [
+      "Computational Thinking Using Python": [
         90,
         80
       ],
@@ -223,7 +223,7 @@
       ]
     },
     "Checkpoint": {
-      "Computational Thinkfing Using Python": [
+      "Computational Thinking Using Python": [
         50,
         80,
         80,
@@ -259,7 +259,7 @@
       ]
     },
     "Global": {
-      "Computational Thinkfing Using Python": [
+      "Computational Thinking Using Python": [
         100
       ],
       "Domain Driven Design Using Java": [
@@ -282,105 +282,105 @@
   {
     "id": 4,
     "Challenge": {
-      "Computational Thinkfing Using Python": [
-        0,
-        0,
-        0
+      "Computational Thinking Using Python": [
+        9.5,
+        10,
+        8
       ],
       "Domain Driven Design Using Java": [
-        0,
-        0,
-        0
+        10,
+        7,
+        9.5
       ],
       "Bulding Relational Database": [
-        0,
-        0,
-        0
+        6,
+        7,
+        8
       ],
       "Front-End Design Engineering": [
-        0,
-        0,
-        0
+        6,
+        9,
+        6
       ],
       "Software Enginnering and Business Model": [
-        0,
-        0,
-        0
+        10,
+        10,
+        10
       ],
       "Artificial Intelligence & ChatBot": [
-        0,
-        0,
-        0
+        10,
+        10,
+        10
       ]
     },
     "Checkpoint": {
-      "Computational Thinkfing Using Python": [
-        0,
-        0,
-        0,
-        0,
-        0
+      "Computational Thinking Using Python": [
+        9,
+        9.5,
+        8.5,
+        9,
+        10
       ],
       "Domain Driven Design Using Java": [
-        0,
-        0,
-        0,
-        0,
-        0
+        10,
+        9,
+        8.5,
+        9,
+        10
       ],
       "Bulding Relational Database": [
-        0,
-        0,
-        0,
-        0,
-        0
+        6,
+        7,
+        6,
+        9,
+        10
       ],
       "Front-End Design Engineering": [
-        0,
-        0,
-        0,
-        0,
-        0
+        10,
+        9,
+        6,
+        8.5,
+        9
       ],
       "Software Enginnering and Business Model": [
-        0,
-        0,
-        0,
-        0,
-        0
+        10,
+        10,
+        10,
+        10,
+        10
       ],
       "Artificial Intelligence & ChatBot": [
-        0,
-        0,
-        0,
-        0
+        10,
+        9,
+        9.5,
+        10
       ]
     },
     "Global": {
-      "Computational Thinkfing Using Python": [
-        0
+      "Computational Thinking Using Python": [
+        9
       ],
       "Domain Driven Design Using Java": [
-        0
+        9
       ],
       "Bulding Relational Database": [
-        0
+        8.5
       ],
       "Front-End Design Engineering": [
-        0
+        7
       ],
       "Software Enginnering and Business Model": [
-        0
+        9
       ],
       "Artificial Intelligence & ChatBot": [
-        0
+        10
       ]
     }
   },
   {
     "id": 5,
     "Challenge": {
-      "Computational Thinkfing Using Python": [
+      "Computational Thinking Using Python": [
         0,
         0,
         0
@@ -412,7 +412,7 @@
       ]
     },
     "Checkpoint": {
-      "Computational Thinkfing Using Python": [
+      "Computational Thinking Using Python": [
         0,
         0,
         0,
