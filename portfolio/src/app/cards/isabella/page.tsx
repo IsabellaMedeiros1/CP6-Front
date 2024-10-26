@@ -133,7 +133,7 @@ export default function Isabella() {
     <div className="min-h-screen bg-gray-100 p-10 flex flex-col items-center">
       <div className="form-container mb-10 bg-blue-300 border border-gray-400 rounded-lg p-6 border-collapse">
         <Image
-          src="/img/isabella.jpeg"
+          src="/img/isabella2.jpeg"
           alt="Foto de Isabella"
           width={120}
           height={120}
@@ -141,7 +141,7 @@ export default function Isabella() {
         />
         <div className="ml-6">
           <h1 className="titulo-nome">Isabella Medeiros</h1>
-          <p className="descricao">Batatinha quando nasce alguma coisa que esqueci teste de descrição preguiça de pensar em algo cu pinto</p>
+          <p className="descricao">Estudante da faculdade FIAP, cursando Análise e Desenvolvimento de Sistemas, turma 1TDSPM.</p>
           <div className="mt-4 flex space-x-4">
             <Link href="https://linkedin.com"><Linkedin className="text-3xl hover:text-blue-400 transition duration-300" /></Link>
             <Link href="https://github.com"><GitHub className="text-3xl hover:text-blue-400 transition duration-300" /></Link>
