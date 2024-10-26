@@ -182,19 +182,19 @@ export default function Guilherme() {
     <div className="min-h-screen bg-gray-100 p-10 flex flex-col items-center">
       <div className="form-container mb-10 bg-blue-300 border border-gray-400 rounded-lg p-6 border-collapse">
         <Image
-          src="/img/paula2.jpeg"
-          alt="Foto da Paula"
+          src="/img/guilherme2.jpeg"
+          alt="Foto do Gui"
           width={120}
           height={120}
           className="rounded-full"
         />
         <div className="ml-6">
-          <h1 className="titulo-nome">Paula Blesa Staniukaitis</h1>
+          <h1 className="titulo-nome">Guilherme Romanholi Santos</h1>
           <p className="descricao">Estudante da faculdade FIAP, cursando Análise e Desenvolvimento de Sistemas, turma 1TDSPM.</p>
           <div className="mt-4 flex space-x-4">
-            <Link href="https://www.linkedin.com/in/paula-blesa-staniukaitis-5ab53224a/"><Linkedin className="text-3xl hover:text-blue-400 transition duration-300" /></Link>
-            <Link href="https://github.com/StaniukaitisPaula"><GitHub className="text-3xl hover:text-blue-400 transition duration-300" /></Link>
-            <Link href="https://www.instagram.com/p_blesaa/"><Insta className="text-3xl hover:text-blue-400 transition duration-300" /></Link>
+            <Link href="https://www.linkedin.com/in/guilherme-romanholi-6b71782b7/"><Linkedin className="text-3xl hover:text-blue-400 transition duration-300" /></Link>
+            <Link href="https://github.com/GuiRomanholi"><GitHub className="text-3xl hover:text-blue-400 transition duration-300" /></Link>
+            <Link href="https://www.instagram.com/gui_r0ma/"><Insta className="text-3xl hover:text-blue-400 transition duration-300" /></Link>
           </div>
         </div>
       </div>
