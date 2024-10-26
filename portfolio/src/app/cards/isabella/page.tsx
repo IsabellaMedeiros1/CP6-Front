@@ -152,7 +152,7 @@ export default function Isabella() {
         if (response.ok) {
           const updatedNotes = await response.json();
           setNotes(updatedNotes);
-          setNoteToDelete(''); // Limpa o campo após a deleção
+          setNoteToDelete(''); 
           setConfirmationMessage('Nota deletada com sucesso!');
           setTimeout(() => setConfirmationMessage(''), 3000);
         } else {
