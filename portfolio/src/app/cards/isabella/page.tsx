@@ -185,9 +185,9 @@ export default function Isabella() {
           <h1 className="titulo-nome">Isabella Medeiros</h1>
           <p className="descricao">Estudante da faculdade FIAP, cursando Análise e Desenvolvimento de Sistemas, turma 1TDSPM.</p>
           <div className="mt-4 flex space-x-4">
-            <Link href="https://www.linkedin.com/in/isabella-medeiros-304769297"><Linkedin className="text-3xl hover:text-blue-400 transition duration-300" /></Link>
-            <Link href="https://github.com/IsabellaMedeiros1"><GitHub className="text-3xl hover:text-blue-400 transition duration-300" /></Link>
-            <Link href="https://www.instagram.com/isa.bll4x/"><Insta className="text-3xl hover:text-blue-400 transition duration-300" /></Link>
+            <Link href="https://www.linkedin.com/in/isabella-medeiros-304769297" target='_blank'><Linkedin className="text-3xl hover:text-blue-400 transition duration-300" /></Link>
+            <Link href="https://github.com/IsabellaMedeiros1" target='_blank'><GitHub className="text-3xl hover:text-blue-400 transition duration-300" /></Link>
+            <Link href="https://www.instagram.com/isa.bll4x/" target='_blank'><Insta className="text-3xl hover:text-blue-400 transition duration-300" /></Link>
           </div>
         </div>
       </div>

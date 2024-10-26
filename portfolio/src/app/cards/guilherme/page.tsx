@@ -192,9 +192,9 @@ export default function Guilherme() {
           <h1 className="titulo-nome">Guilherme Romanholi Santos</h1>
           <p className="descricao">Estudante da faculdade FIAP, cursando Análise e Desenvolvimento de Sistemas, turma 1TDSPM.</p>
           <div className="mt-4 flex space-x-4">
-            <Link href="https://www.linkedin.com/in/guilherme-romanholi-6b71782b7/"><Linkedin className="text-3xl hover:text-blue-400 transition duration-300" /></Link>
-            <Link href="https://github.com/GuiRomanholi"><GitHub className="text-3xl hover:text-blue-400 transition duration-300" /></Link>
-            <Link href="https://www.instagram.com/gui_r0ma/"><Insta className="text-3xl hover:text-blue-400 transition duration-300" /></Link>
+            <Link href="https://www.linkedin.com/in/guilherme-romanholi-6b71782b7/" target='_blank'><Linkedin className="text-3xl hover:text-blue-400 transition duration-300" /></Link>
+            <Link href="https://github.com/GuiRomanholi" target='_blank'><GitHub className="text-3xl hover:text-blue-400 transition duration-300" /></Link>
+            <Link href="https://www.instagram.com/gui_r0ma/" target='_blank'><Insta className="text-3xl hover:text-blue-400 transition duration-300" /></Link>
           </div>
         </div>
       </div>

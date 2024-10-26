@@ -191,8 +191,8 @@ export default function Cristian() {
           <h1 className="titulo-nome">Cristian Caja Rodrigues </h1>
           <p className="descricao">Estudante da faculdade FIAP, cursando Análise e Desenvolvimento de Sistemas, turma 1TDSPM.</p>
           <div className="mt-4 flex space-x-4">
-            <Link href="https://github.com/cristianrcaja"><GitHub className="text-3xl hover:text-blue-400 transition duration-300" /></Link>
-            <Link href="https://www.instagram.com/cristiancaja_"><Insta className="text-3xl hover:text-blue-400 transition duration-300" /></Link>
+            <Link href="https://github.com/cristianrcaja" target='_blank'><GitHub className="text-3xl hover:text-blue-400 transition duration-300" /></Link>
+            <Link href="https://www.instagram.com/cristiancaja_" target='_blank'><Insta className="text-3xl hover:text-blue-400 transition duration-300" /></Link>
           </div>
         </div>
       </div>
