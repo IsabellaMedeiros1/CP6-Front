@@ -5,7 +5,7 @@ import { AddNotaRequest } from "@/types"
 
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
-    const id = await params.id; 
+    const id = await params.id;
 
     const file = await fs.readFile(process.cwd() + "/src/data/notas.json", "utf-8");
     const alunos: Integrante[] = JSON.parse(file);
@@ -19,7 +19,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
 export async function POST(request: Request, { params }: { params: { id: string } }) {
     try {
         const { tipo, disciplina, valor }: AddNotaRequest = await request.json();
-        console.log("Dados recebidos para POST:", { tipo, disciplina, valor }); 
+        console.log("Dados recebidos para POST:", { tipo, disciplina, valor });
         const filePath = process.cwd() + "/src/data/notas.json";
 
         const file = await fs.readFile(filePath, "utf-8");
@@ -108,7 +108,10 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
         }
 
         const { tipo, disciplina, valor }: { tipo: keyof Integrante; disciplina: string; valor: number } = await request.json();
-        
+
+        // Adicione este log para ver os dados recebidos
+        console.log("Dados recebidos:", { tipo, disciplina, valor });
+
         if (!tipo || !disciplina || valor === undefined) {
             return NextResponse.json({ error: "Faltam dados para deletar a nota." }, { status: 400 });
         }
@@ -136,5 +139,3 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
         return NextResponse.json({ error: "Erro ao deletar a nota" }, { status: 500 });
     }
 }
-
-
