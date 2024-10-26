@@ -1,30 +1,25 @@
 import { NextResponse } from "next/server";
 import { promises as fs } from "fs";
-import path from 'path';
 import { Integrante } from "@/types";
-import { TipoNotas } from "@/types";
 import { AddNotaRequest } from "@/types"
 
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
-    // Aguarda o acesso a params
-    const id = await params.id; // params.id deve ser uma string, não um número
+    const id = await params.id; 
 
     const file = await fs.readFile(process.cwd() + "/src/data/notas.json", "utf-8");
     const alunos: Integrante[] = JSON.parse(file);
 
-    // Convertendo o id para número para a comparação
     const aluno = alunos.find(p => p.id === Number(id));
 
     return NextResponse.json(aluno);
 }
 
 
-// Estrutura da requisição
 export async function POST(request: Request, { params }: { params: { id: string } }) {
     try {
         const { tipo, disciplina, valor }: AddNotaRequest = await request.json();
-        console.log("Dados recebidos para POST:", { tipo, disciplina, valor }); // Log dos dados recebidos
+        console.log("Dados recebidos para POST:", { tipo, disciplina, valor }); 
         const filePath = process.cwd() + "/src/data/notas.json";
 
         const file = await fs.readFile(filePath, "utf-8");
@@ -62,7 +57,6 @@ export async function POST(request: Request, { params }: { params: { id: string 
 
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
     try {
-        // Estrutura do corpo da requisição
         const { tipo, disciplina, valorAntigo, novoValor }: { tipo: keyof Integrante; disciplina: string; valorAntigo: number; novoValor: number } = await request.json();
 
         const filePath = process.cwd() + "/src/data/notas.json";
@@ -100,3 +94,47 @@ export async function PUT(request: Request, { params }: { params: { id: string }
         return NextResponse.json({ error: "Erro ao processar a atualização" }, { status: 500 });
     }
 }
+
+export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+    try {
+        const id = Number(params.id);
+        const filePath = process.cwd() + "/src/data/notas.json";
+        const file = await fs.readFile(filePath, "utf-8");
+        const alunos: Integrante[] = JSON.parse(file);
+
+        const aluno = alunos.find(p => p.id === id);
+        if (!aluno) {
+            return NextResponse.json({ error: "Aluno não encontrado" }, { status: 404 });
+        }
+
+        const { tipo, disciplina, valor }: { tipo: keyof Integrante; disciplina: string; valor: number } = await request.json();
+        
+        if (!tipo || !disciplina || valor === undefined) {
+            return NextResponse.json({ error: "Faltam dados para deletar a nota." }, { status: 400 });
+        }
+
+        if (!['Challenge', 'Checkpoint', 'Global'].includes(tipo)) {
+            return NextResponse.json({ error: "Tipo de nota inválido" }, { status: 400 });
+        }
+
+        const notasPorTipo = aluno[tipo] as Record<string, number[]>;
+        if (!(disciplina in notasPorTipo)) {
+            return NextResponse.json({ error: "Disciplina não encontrada" }, { status: 404 });
+        }
+
+        const notaIndex = notasPorTipo[disciplina].indexOf(valor);
+        if (notaIndex === -1) {
+            return NextResponse.json({ error: "Nota não encontrada" }, { status: 404 });
+        }
+
+        notasPorTipo[disciplina].splice(notaIndex, 1);
+        await fs.writeFile(filePath, JSON.stringify(alunos, null, 2), "utf-8");
+
+        return NextResponse.json({ message: "Nota deletada com sucesso!" }, { status: 200 });
+    } catch (error) {
+        console.error("Erro ao deletar a nota:", error);
+        return NextResponse.json({ error: "Erro ao deletar a nota" }, { status: 500 });
+    }
+}
+
+

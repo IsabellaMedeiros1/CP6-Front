@@ -18,7 +18,9 @@ export default function Isabella() {
   const [editType, setEditType] = useState<keyof TipoNotas>('Challenge');
   const [editSubject, setEditSubject] = useState<string>('');
   const [noteToEdit, setNoteToEdit] = useState<string>('');
-  const [confirmationMessage, setConfirmationMessage] = useState<string>(''); 
+  const [noteToDelete, setNoteToDelete] = useState<string>('');
+  const [confirmationMessage, setConfirmationMessage] = useState<string>('');
+
 
   useEffect(() => {
     const fetchNotes = async () => {
@@ -129,6 +131,46 @@ export default function Isabella() {
     }
   };
 
+  const handleDeleteNote = async () => {
+    if (noteToDelete) {
+      const idToDelete = Number(noteToDelete);
+
+      if (isNaN(idToDelete)) {
+        console.error('ID da nota é inválido.');
+        return;
+      }
+
+      try {
+        const response = await fetch(`http://localhost:3000/api/base-notas/1`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ tipo: editType, disciplina: editSubject, valor: idToDelete }),
+        });
+
+        if (response.ok) {
+          const updatedNotes = await response.json();
+          setNotes(updatedNotes);
+          setNoteToDelete(''); // Limpa o campo após a deleção
+          setConfirmationMessage('Nota deletada com sucesso!');
+          setTimeout(() => setConfirmationMessage(''), 3000);
+        } else {
+          const errorData = await response.json();
+          console.error('Erro ao deletar nota:', errorData);
+        }
+      } catch (error) {
+        console.error('Erro ao deletar nota:', error);
+      }
+    } else {
+      console.error('Faltam dados para deletar a nota.');
+    }
+};
+
+  
+  
+
+
   return (
     <div className="min-h-screen bg-gray-100 p-10 flex flex-col items-center">
       <div className="form-container mb-10 bg-blue-300 border border-gray-400 rounded-lg p-6 border-collapse">
@@ -157,21 +199,23 @@ export default function Isabella() {
       )}
 
       <div className="grid-notas">
-        {notes && ['Challenge', 'Global', 'Checkpoint'].map((type) => (
-          <div key={type} className="card-notas">
-            <h3 className="titulo-card">{type}</h3>
-            {Object.keys(notes[type as keyof TipoNotas]).map((subject) => (
-              <div key={subject} className="mt-3">
-                <button
-                  className="btn-nota"
-                  onClick={() => openModal(type as keyof TipoNotas, subject)}
-                >
-                  {subject}
-                </button>
-              </div>
-            ))}
-          </div>
-        ))}
+        {notes &&
+          ['Challenge', 'Global', 'Checkpoint'].map((type) => (
+            <div key={type} className="card-notas">
+              <h3 className="titulo-card">{type}</h3>
+
+              {Object.keys(notes[type as keyof TipoNotas] || {}).map((subject) => (
+                <div key={subject} className="mt-3">
+                  <button
+                    className="btn-nota"
+                    onClick={() => openModal(type as keyof TipoNotas, subject)}
+                  >
+                    {subject}
+                  </button>
+                </div>
+              ))}
+            </div>
+          ))}
       </div>
 
       {showModal && (
@@ -289,7 +333,58 @@ export default function Isabella() {
           Editar
         </button>
       </div>
+      <div className="form-container">
+        <h2 className="titulo-form">Deletar Nota</h2>
 
+        <select
+          onChange={(e) => {
+            const selectedValue = e.target.value as keyof TipoNotas;
+            setEditType(selectedValue);
+            setEditSubject('');
+          }}
+          className="select mb-4"
+        >
+          <option value="">Escolha a Avaliação</option>
+          {notes && ['Challenge', 'Global', 'Checkpoint'].map((type) => (
+            <option key={type} value={type}>
+              {type}
+            </option>
+          ))}
+        </select>
+
+        <select
+          value={editSubject}
+          onChange={(e) => setEditSubject(e.target.value)}
+          className="select mb-4"
+        >
+          <option value="">Escolha a Matéria</option>
+          {editType && notes && Object.keys(notes[editType]).map((subject) => (
+            <option key={subject} value={subject}>
+              {subject}
+            </option>
+          ))}
+        </select>
+
+        <select
+          value={noteToEdit}
+          onChange={(e) => setNoteToEdit(e.target.value)}
+          className="select mb-4"
+        >
+          <option value="">Escolha a Nota para Deletar</option>
+          {editSubject && notes && notes[editType][editSubject].map((note: number, index: number) => (
+            <option key={index} value={note}>
+              {note}
+            </option>
+          ))}
+        </select>
+
+        <button
+          onClick={handleDeleteNote}
+          className="btn-add-nota bg-[#007BFF] text-white hover:bg-[#0056b3] transition duration-200 px-4 py-2 rounded-full shadow-md"
+        >
+          Deletar
+        </button>
+      </div>
     </div>
   );
 }

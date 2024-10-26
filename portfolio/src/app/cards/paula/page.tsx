@@ -141,7 +141,7 @@ export default function Paula() {
         />
         <div className="ml-6">
           <h1 className="titulo-nome">Paula Blesa Staniukaitis</h1>
-          <p className="descricao">"Porque Deus amou o mundo de tal maneira que deu seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna." – João 3:16</p>
+          <p className="descricao">Porque Deus amou o mundo de tal maneira que deu seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna. – João 3:16</p>
           <div className="mt-4 flex space-x-4">
             <Link href="https://www.linkedin.com/in/paula-blesa-staniukaitis-5ab53224a/"><Linkedin className="text-3xl hover:text-rose-600 transition duration-300" /></Link>
             <Link href="https://github.com/StaniukaitisPaula"><GitHub className="text-3xl hover:text-rose-600 transition duration-300" /></Link>

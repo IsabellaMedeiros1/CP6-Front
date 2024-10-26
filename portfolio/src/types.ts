@@ -1,9 +1,3 @@
-
-interface Nota {
-  disciplina: string; // Nome da disciplina
-  valor: number;      // Valor da nota a ser adicionada
-}
-
 export interface Avaliacao {
   id: number;
   categoria: string;
@@ -18,7 +12,7 @@ export interface Integrante {
 }
 export interface Integrante {
   id: number;
-  nome: string; // Adicionado aqui
+  nome: string; 
   Challenge: Record<string, number[]>;
   Checkpoint: Record<string, number[]>;
   Global: Record<string, number[]>;
@@ -33,11 +27,11 @@ export const integrantes: Integrante[] = [
 ];
 
 export interface HeaderProps {
-  integrantes: { id: number; nome: string }[]; // Modifique para corresponder à estrutura atual
+  integrantes: { id: number; nome: string }[]; 
 }
 export interface Notas {
   [type: string]: {
-    [subject: string]: number[] | undefined; // Adiciona undefined para evitar erros
+    [subject: string]: number[] | undefined; 
   };
 }
 
@@ -54,7 +48,7 @@ export interface TipoNotas {
 }
 
 export interface AddNotaRequest {
-  tipo: keyof Integrante; // Challenge | Checkpoint | Global
-  disciplina: string;     // Nome da disciplina
-  valor: number;          // Valor da nota
+  tipo: keyof Integrante; 
+  disciplina: string;     
+  valor: number;          
 }
