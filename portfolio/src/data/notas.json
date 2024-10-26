@@ -103,97 +103,90 @@
     "id": 2,
     "Challenge": {
       "Computational Thinkfing Using Python": [
-        0,
-        0,
-        0
+        81,
+        95,
+        80
       ],
       "Domain Driven Design Using Java": [
-        0,
-        0,
-        0
+        70,
+        90,
+        95
       ],
       "Bulding Relational Database": [
-        0,
-        0,
-        0
+        70,
+        60,
+        90
       ],
       "Front-End Design Engineering": [
-        0,
-        0,
-        0
+        80,
+        70,
+        60
       ],
       "Software Enginnering and Business Model": [
-        0,
-        0,
-        0
+        50,
+        40,
+        60
       ],
       "Artificial Intelligence & ChatBot": [
-        0,
-        0,
-        0
+        60,
+        70,
+        80
       ]
     },
     "Checkpoint": {
       "Computational Thinkfing Using Python": [
-        0,
-        0,
-        0,
-        0,
-        0
+        45,
+        50,
+        60
+        
       ],
       "Domain Driven Design Using Java": [
-        0,
-        0,
-        0,
-        0,
-        0
+        10,
+        20,
+        30
+        
       ],
       "Bulding Relational Database": [
-        0,
-        0,
-        0,
-        0,
-        0
+        40,
+        20,
+        10
+        
+      
       ],
       "Front-End Design Engineering": [
-        0,
-        0,
-        0,
-        0,
-        0
+        10,
+        20,
+        40
       ],
       "Software Enginnering and Business Model": [
-        0,
-        0,
-        0,
-        0,
-        0
+        10,
+        60,
+        80
       ],
       "Artificial Intelligence & ChatBot": [
-        0,
-        0,
-        0,
-        0
+        10,
+        60,
+        80
       ]
     },
     "Global": {
       "Computational Thinkfing Using Python": [
-        0
+        80
       ],
       "Domain Driven Design Using Java": [
-        0
+        90
       ],
       "Bulding Relational Database": [
-        0
+        95
       ],
       "Front-End Design Engineering": [
-        0
+        80
       ],
       "Software Enginnering and Business Model": [
-        0
+        60
       ],
       "Artificial Intelligence & ChatBot": [
-        0
+        60
       ]
     }
   },
