@@ -109,7 +109,7 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
 
         const { tipo, disciplina, valor }: { tipo: keyof Integrante; disciplina: string; valor: number } = await request.json();
 
-        // Adicione este log para ver os dados recebidos
+        
         console.log("Dados recebidos:", { tipo, disciplina, valor });
 
         if (!tipo || !disciplina || valor === undefined) {

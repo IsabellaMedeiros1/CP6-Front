@@ -6,7 +6,6 @@ import React, { useEffect, useState } from 'react';
 import { TipoNotas } from '@/types';
 import { FaGithub as GitHub } from 'react-icons/fa';
 import { FaInstagram as Insta } from "react-icons/fa6";
-import { RxLinkedinLogo as Linkedin } from "react-icons/rx";
 import "@/styles/paginas.css";
 
 export default function Cristian() {
