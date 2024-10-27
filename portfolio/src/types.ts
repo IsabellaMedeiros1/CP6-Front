@@ -6,12 +6,6 @@ export interface Avaliacao {
 
 export interface Integrante {
   id: number;
-  Challenge: Record<string, number[]>;
-  Checkpoint: Record<string, number[]>;
-  Global: Record<string, number[]>;
-}
-export interface Integrante {
-  id: number;
   nome: string; 
   Challenge: Record<string, number[]>;
   Checkpoint: Record<string, number[]>;
@@ -29,6 +23,7 @@ export const integrantes: Integrante[] = [
 export interface HeaderProps {
   integrantes: { id: number; nome: string }[]; 
 }
+
 export interface Notas {
   [type: string]: {
     [subject: string]: number[] | undefined; 
