@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import { Integrante } from "@/types";
-import { AddNotaRequest } from "@/types"
+import { AddNotaRequest } from "@/types";
 
+type ParamsContext = { params: { id: string } };
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
-    const id = await params.id;
+export async function GET(request: Request, context: ParamsContext) {
+    const { id } = context.params;
 
     const file = await fs.readFile(process.cwd() + "/src/data/notas.json", "utf-8");
     const alunos: Integrante[] = JSON.parse(file);
@@ -15,8 +16,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
     return NextResponse.json(aluno);
 }
 
-
-export async function POST(request: Request, { params }: { params: { id: string } }) {
+export async function POST(request: Request, context: ParamsContext) {
     try {
         const { tipo, disciplina, valor }: AddNotaRequest = await request.json();
         console.log("Dados recebidos para POST:", { tipo, disciplina, valor });
@@ -25,9 +25,9 @@ export async function POST(request: Request, { params }: { params: { id: string 
         const file = await fs.readFile(filePath, "utf-8");
         const integrantes: Integrante[] = JSON.parse(file);
 
-        const aluno = integrantes.find(i => i.id === Number(params.id));
+        const aluno = integrantes.find(i => i.id === Number(context.params.id));
         if (!aluno) {
-            console.log("Aluno não encontrado:", params.id);
+            console.log("Aluno não encontrado:", context.params.id);
             return NextResponse.json({ error: "Aluno não encontrado" }, { status: 404 });
         }
 
@@ -54,8 +54,7 @@ export async function POST(request: Request, { params }: { params: { id: string 
     }
 }
 
-
-export async function PUT(request: Request, { params }: { params: { id: string } }) {
+export async function PUT(request: Request, context: ParamsContext) {
     try {
         const { tipo, disciplina, valorAntigo, novoValor }: { tipo: keyof Integrante; disciplina: string; valorAntigo: number; novoValor: number } = await request.json();
 
@@ -63,7 +62,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
         const file = await fs.readFile(filePath, "utf-8");
         const integrantes: Integrante[] = JSON.parse(file);
 
-        const integranteIndex = integrantes.findIndex(i => i.id === Number(params.id));
+        const integranteIndex = integrantes.findIndex(i => i.id === Number(context.params.id));
         if (integranteIndex === -1) {
             return NextResponse.json({ error: "Integrante não encontrado" }, { status: 404 });
         }
@@ -95,9 +94,9 @@ export async function PUT(request: Request, { params }: { params: { id: string }
     }
 }
 
-export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+export async function DELETE(request: Request, context: ParamsContext) {
     try {
-        const id = Number(params.id);
+        const id = Number(context.params.id);
         const filePath = process.cwd() + "/src/data/notas.json";
         const file = await fs.readFile(filePath, "utf-8");
         const alunos: Integrante[] = JSON.parse(file);
@@ -109,7 +108,6 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
 
         const { tipo, disciplina, valor }: { tipo: keyof Integrante; disciplina: string; valor: number } = await request.json();
 
-        
         console.log("Dados recebidos:", { tipo, disciplina, valor });
 
         if (!tipo || !disciplina || valor === undefined) {
