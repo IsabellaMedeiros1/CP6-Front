@@ -18,7 +18,7 @@ export default function Isabella() {
   const [editType, setEditType] = useState<keyof TipoNotas>('Challenge');
   const [editSubject, setEditSubject] = useState<string>('');
   const [noteToEdit, setNoteToEdit] = useState<string>('');
-  const [noteToDelete, setNoteToDelete] = useState<string>('');
+  const [noteToDelete, setNoteToDelete] = useState<number | null>(null);
   const [confirmationMessage, setConfirmationMessage] = useState<string>('');
 
 
@@ -132,41 +132,40 @@ export default function Isabella() {
   };
 
   const handleDeleteNote = async () => {
-    if (noteToDelete) {
-      const idToDelete = Number(noteToDelete);
-
-      if (isNaN(idToDelete)) {
-        console.error('ID da nota é inválido.');
-        return;
-      }
-
-      try {
-        const response = await fetch(`http://localhost:3000/api/base-notas/1`, {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ tipo: editType, disciplina: editSubject, valor: idToDelete }),
+    if (typeof noteToDelete !== 'number') return; 
+  
+    try {
+      const response = await fetch(`http://localhost:3000/api/base-notas/1`, {
+        method: "DELETE",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          tipo: editType,        
+          disciplina: editSubject,
+          valor: noteToDelete,   
+        }),
+      });
+  
+      if (response.ok) {
+        setNotes((prevNotes) => {
+          if (!prevNotes) return null;
+          
+          const updatedNotas: TipoNotas = { ...prevNotes };
+          if (updatedNotas[editType] && updatedNotas[editType][editSubject]) {
+            updatedNotas[editType][editSubject] = updatedNotas[editType][editSubject].filter(nota => nota !== noteToDelete);
+          }
+          return updatedNotas;
         });
-
-        if (response.ok) {
-          const updatedNotes = await response.json();
-          setNotes(updatedNotes);
-          setNoteToDelete(''); 
-          setConfirmationMessage('Nota deletada com sucesso!');
-          setTimeout(() => setConfirmationMessage(''), 3000);
-        } else {
-          const errorData = await response.json();
-          console.error('Erro ao deletar nota:', errorData);
-        }
-      } catch (error) {
-        console.error('Erro ao deletar nota:', error);
+        alert("A nota foi excluída com sucesso!");
+      } else {
+        throw new Error("Erro ao excluir a nota: " + response.statusText);
       }
-    } else {
-      console.error('Faltam dados para deletar a nota.');
+    } catch (error) {
+      console.error("Falha na exclusão da nota: ", error);
+      alert("Houve um erro ao tentar excluir a nota. Tente novamente.");
     }
-};
-
+  };
   
   
 
@@ -341,6 +340,7 @@ export default function Isabella() {
             const selectedValue = e.target.value as keyof TipoNotas;
             setEditType(selectedValue);
             setEditSubject('');
+            setNoteToDelete(null); 
           }}
           className="select mb-4"
         >
@@ -354,7 +354,10 @@ export default function Isabella() {
 
         <select
           value={editSubject}
-          onChange={(e) => setEditSubject(e.target.value)}
+          onChange={(e) => {
+            setEditSubject(e.target.value);
+            setNoteToDelete(null); 
+          }}
           className="select mb-4"
         >
           <option value="">Escolha a Matéria</option>
@@ -366,12 +369,12 @@ export default function Isabella() {
         </select>
 
         <select
-          value={noteToEdit}
-          onChange={(e) => setNoteToEdit(e.target.value)}
+          value={noteToDelete !== null ? noteToDelete : ''} 
+          onChange={(e) => setNoteToDelete(e.target.value ? Number(e.target.value) : null)} 
           className="select mb-4"
         >
           <option value="">Escolha a Nota para Deletar</option>
-          {editSubject && notes && notes[editType][editSubject].map((note: number, index: number) => (
+          {editSubject && notes && notes[editType][editSubject].map((note, index) => (
             <option key={index} value={note}>
               {note}
             </option>

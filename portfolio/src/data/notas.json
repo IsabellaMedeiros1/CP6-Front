@@ -5,8 +5,7 @@
       "Computational Thinking Using Python": [
         93,
         100,
-        100,
-        5555
+        100
       ],
       "Domain Driven Design Using Java": [
         50,
@@ -481,8 +480,7 @@
         9
       ],
       "Artificial Intelligence & ChatBot": [
-        9.5,
-        10
+        9.5
       ]
     }
   }
