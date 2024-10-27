@@ -166,9 +166,6 @@ export default function Isabella() {
       alert("Houve um erro ao tentar excluir a nota. Tente novamente.");
     }
   };
-  
-  
-
 
   return (
     <div className="min-h-screen bg-gray-100 p-10 flex flex-col items-center">

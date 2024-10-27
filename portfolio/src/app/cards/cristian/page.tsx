@@ -17,7 +17,7 @@ export default function Cristian() {
   const [editType, setEditType] = useState<keyof TipoNotas>('Challenge');
   const [editSubject, setEditSubject] = useState<string>('');
   const [noteToEdit, setNoteToEdit] = useState<string>('');
-  const [noteToDelete, setNoteToDelete] = useState<string>('');
+  const [noteToDelete, setNoteToDelete] = useState<number | null>(null);
   const [confirmationMessage, setConfirmationMessage] = useState<string>('');
 
   useEffect(() => {
@@ -131,50 +131,40 @@ export default function Cristian() {
 
 
   const handleDeleteNote = async () => {
-    console.log('editSubject:', editSubject);
-    console.log('noteToDelete:', noteToDelete);
-    console.log('editType:', editType);
-
-    if (editSubject && noteToDelete && editType) {
-      const noteValueToDelete = Number(noteToDelete);
-
-      if (isNaN(noteValueToDelete)) {
-        console.error('O valor da nota é inválido.');
-        return;
-      }
-
-      try {
-        const response = await fetch('http://localhost:3000/api/base-notas/2', {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            tipo: editType,
-            disciplina: editSubject,
-            valor: noteValueToDelete,
-          }),
+    if (typeof noteToDelete !== 'number') return; 
+  
+    try {
+      const response = await fetch(`http://localhost:3000/api/base-notas/2`, {
+        method: "DELETE",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          tipo: editType,        
+          disciplina: editSubject,
+          valor: noteToDelete,   
+        }),
+      });
+  
+      if (response.ok) {
+        setNotes((prevNotes) => {
+          if (!prevNotes) return null;
+          
+          const updatedNotas: TipoNotas = { ...prevNotes };
+          if (updatedNotas[editType] && updatedNotas[editType][editSubject]) {
+            updatedNotas[editType][editSubject] = updatedNotas[editType][editSubject].filter(nota => nota !== noteToDelete);
+          }
+          return updatedNotas;
         });
-
-        if (response.ok) {
-          const updatedNotes = await response.json();
-          setNotes(updatedNotes);
-          setNoteToDelete('');
-          setConfirmationMessage('Nota deletada com sucesso!');
-          setTimeout(() => setConfirmationMessage(''), 3000);
-        } else {
-          const errorData = await response.json();
-          console.error('Erro ao deletar nota:', errorData);
-        }
-      } catch (error) {
-        console.error('Erro ao deletar nota:', error);
+        alert("A nota foi excluída com sucesso!");
+      } else {
+        throw new Error("Erro ao excluir a nota: " + response.statusText);
       }
-    } else {
-      console.error('Faltam dados para deletar a nota. Certifique-se de que a nota, a disciplina e o tipo estão selecionados.');
+    } catch (error) {
+      console.error("Falha na exclusão da nota: ", error);
+      alert("Houve um erro ao tentar excluir a nota. Tente novamente.");
     }
   };
-
-
 
 
   return (
@@ -352,55 +342,58 @@ export default function Cristian() {
 
       <div className="form-container">
         <h2 className="titulo-form">Deletar Nota</h2>
+
         <select
           onChange={(e) => {
             const selectedValue = e.target.value as keyof TipoNotas;
             setEditType(selectedValue);
             setEditSubject('');
+            setNoteToDelete(null); 
           }}
           className="select mb-4"
         >
-          <option value="">Escolha o Tipo</option>
-          {['Challenge', 'Global', 'Checkpoint'].map((type) => (
+          <option value="">Escolha a Avaliação</option>
+          {notes && ['Challenge', 'Global', 'Checkpoint'].map((type) => (
             <option key={type} value={type}>
               {type}
             </option>
           ))}
         </select>
 
-        {editType && notes && (
-          <select
-            value={editSubject}
-            onChange={(e) => setEditSubject(e.target.value)}
-            className="select mb-4"
-          >
-            <option value="">Escolha a Disciplina</option>
-            {Object.keys(notes[editType] || {}).map((subject) => (
-              <option key={subject} value={subject}>
-                {subject}
-              </option>
-            ))}
-          </select>
-        )}
+        <select
+          value={editSubject}
+          onChange={(e) => {
+            setEditSubject(e.target.value);
+            setNoteToDelete(null); 
+          }}
+          className="select mb-4"
+        >
+          <option value="">Escolha a Matéria</option>
+          {editType && notes && Object.keys(notes[editType]).map((subject) => (
+            <option key={subject} value={subject}>
+              {subject}
+            </option>
+          ))}
+        </select>
 
-        {editSubject && notes && notes[editType] && notes[editType][editSubject] && (
-          <select
-            value={noteToEdit}
-            onChange={(e) => setNoteToEdit(e.target.value)}
-            className="select mb-4"
-          >
-            <option value="">Escolha a Nota para Editar</option>
-            {notes[editType][editSubject].map((note: number, index: number) => (
-              <option key={index} value={note}>
-                {note}
-              </option>
-            ))}
-          </select>
-        )}
+        <select
+          value={noteToDelete !== null ? noteToDelete : ''} 
+          onChange={(e) => setNoteToDelete(e.target.value ? Number(e.target.value) : null)} 
+          className="select mb-4"
+        >
+          <option value="">Escolha a Nota para Deletar</option>
+          {editSubject && notes && notes[editType][editSubject].map((note, index) => (
+            <option key={index} value={note}>
+              {note}
+            </option>
+          ))}
+        </select>
 
-
-        <button onClick={handleDeleteNote} className="btn-add-nota bg-[#007BFF] text-white hover:bg-[#0056b3] transition duration-200 px-4 py-2 rounded-full shadow-md">
-          Deletar Nota
+        <button
+          onClick={handleDeleteNote}
+          className="btn-add-nota bg-[#007BFF] text-white hover:bg-[#0056b3] transition duration-200 px-4 py-2 rounded-full shadow-md"
+        >
+          Deletar
         </button>
       </div>
     </div>
